@@ -1,0 +1,46 @@
+IoC，控制反转，将传统的对象创建流程转变为交由框架进行创建和管理。在Spring中，对象的创建交给Spring进行配置。它包括依赖注入。 
+DI，依赖注入，向类的属性设置值。 
+IoC与DI的关系：依赖注入不能单独存在，需要在IoC基础之上完成操作。
+
+ioc实例
+创建需要注入的类
+配置bean（applicationContext.xml)
+编写测试类测试
+
+测试实例
+public class TestClassName{
+@Test
+public void TestName(){
+	// 1. 加载Spring配置文件，根据创建对象
+    ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
+    // 2. 得到配置创建的对象
+	User user = (User) context.getBean("user");
+	System.out.println(user);
+	user.add();
+    }
+}
+
+Bean标签的常用属性
+（1）id属性：用于指定配置对象的名称，不能包含特殊符号。 
+（2）class属性：创建对象所在类的全路径。 
+（3）name属性：功能同id属性一致。但是在name属性值中可以包含特殊符号。 
+（4）scope属性
+	singleton：默认值，单例 
+	单例模式下，在程序下只有一个实例。非单态模式下，每次请求该Bean，都会生成一个新的对象。
+	prototype：多例
+	request：创建对象后将对象存放到request域
+	session：创建对象后将对象存放到session域
+	globalSession：创建对象后将对象存放到globalSession域
+
+属性注入 
+	有参构造函数注入属性
+	set方法注入属性
+	注入对象类型属性
+	P名称空间注入属性
+	注入复杂类型属性
+
+spring的bean管理 （注解）
+@Compent
+@Controller
+@Service
+@Repository

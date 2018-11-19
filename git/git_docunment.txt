@@ -1,0 +1,90 @@
+git 常用命令
+
+1>创建多个ssh用于不同的仓库
+	ssh-keygen -t rsa -b 4096 -C "your_email@example.com" -f ~/.ssh/xxx_rsa
+	ssh-agent bash
+	ssh-add ~/.ssh/xxx_rsa
+	配置config文件
+	~/.ssh 找到或者创建（touch config）config文件
+	# 该为念用于配置私钥对应的服务器
+	# github
+	Host github.com #服务器地址
+    	HostName github.com #服务器名字
+    	PreferredAuthentications publickey  #ssh类型
+    	IdentityFile ~/.ssh/xxx_rsa  #创建的ssh文件
+	创建一个仓库：
+		git init
+	克隆别人的远程仓库：
+		clone url	
+	连接自己的远程仓库：
+		远程仓库添加ssh_key
+		git remote add orign url
+
+2>版本回退
+	git log 当前日志
+	git reflog 文件历史日志
+	git log --graph --pretty=oneline --abbrev-commit 图形化修改界面
+	git reset --hard HEAD^ 回退上一次版本
+	gi1t reset --hard HEAD^^回退上上一次版本
+	git reset --hard HEAD~100 回退100次版本 
+	git reset --hard id(部分) 回到未来的版本
+  
+3>工作区
+	git add <file> 添加修改到暂存去
+	git commit -m "message" 提交一次版本信息 message为版本信息
+	git status 查看当前状态
+	
+4>撤销修改
+	git checkout --<file>撤销修改 对于没有进行git add 的恢复add之前；对于add之后的，恢复到add。
+
+5>删除文件
+	git rm  <file> 删除文件
+	git checkout --<file>撤销删除
+	git commit -m "message" 版本同步删除
+	
+6>分支创见与合并
+	git branch  查看分支
+	git branch <name> 创建分支
+	git checkout <name> 切换分支
+	git checkout -b <name> 创建并切换分支
+	git merge <name> 合并某分支到当前分支
+	git branch -d <name> 删除分支
+	git merge --no-ff -m "message" dev 普通合并，在log中保存合并的dev分支的信息
+	
+7>推送版本
+	git push -u origin master 第一次推送master所有内容
+	git push origin master 推送最新修改
+
+8>bug分支
+	git stash 保存当前分支操作并建立新的临时分支，临时分支创建位置为bug出现的分支位置,完成之后删除分支，返回上次分支。
+	git stash list 查看保存的内容
+	git stash pop 恢复保存之前的内容并删除stash
+	git stash apply（git stash apply@{0} 查看git stash list依据) 恢复保存的内容，一般用于保存多个satsh的情形
+	git stash drop 删除stash空间
+
+9>Feature分支
+	git branch -D <name> 删除一个没用合并的分支，强行删除。
+	
+10>多人协作
+	git clone ssh key 克隆版本到本地
+	git checkout -b dev origin/dev 创建本地dev并关联远程dev
+	多人协作对于同一个文件修改出现冲突 先git pull 现在当前最新文件，然后将其和自己更改的合并，解决合并冲突，在git pull。
+
+11>rebase
+	git rebase将分岔的先合并成一条线。
+
+12>创建标签
+	git tag <name>创建一个标签
+	git tag 查看标签
+	git tag <name> id 对一已经提交的事件创建标签
+	git show <tagname> 查看标签的详细信息
+	git tag -d <tagname> 删除标签
+	git push origin <tagname>  推送远程标签
+	git push origin --tags 一次性推送全部标签
+	git tag -d <tagname>  git push origin :refs/tags/<tagname> 删除远程标签
+
+	
+
+	
+	
+	
